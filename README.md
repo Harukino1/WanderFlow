@@ -1,16 +1,66 @@
-# React + Vite
+# WanderFlow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Hotel Booking
 
-Currently, two official plugins are available:
+- Destination search
+- Check-in and check-out dates
+- Guest and room selection
+- Hotel listings
+- Room types
+- Hotel ratings
+- Guest reviews
+- Amenities
+- Price comparison
+- Availability status
+- Booking confirmation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tour Packages
 
-## React Compiler
+- Featured destinations
+- Local experiences
+- Guided tours
+- Weekend getaways
+- Adventure packages
+- Cultural tours
+- Family packages
+- Package duration
+- Group size
+- Tour pricing
+- Included activities
+- Booking status
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Travel Itinerary Planner
 
-## Expanding the ESLint configuration
+- Trip creation
+- Destination management
+- Day-by-day planning
+- Activity scheduling
+- Hotel reservations
+- Tour reservations
+- Transportation planning
+- Date and time management
+- Location details
+- Trip timeline
+- Itinerary editing
+- Itinerary sharing
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## User Features
+
+- Account registration
+- User login
+- Profile management
+- Saved hotels
+- Saved tours
+- Favorite destinations
+- Booking history
+- Upcoming trips
+- Notifications
+
+## WanderFlow
+
+- Hotel booking
+- Tour packages
+- Travel itinerary planner
+- Destination discovery
+- Trip organization
+- Reservation management
