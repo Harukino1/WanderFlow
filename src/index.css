@@ -40,7 +40,7 @@ body,
     z-index: 2;
   }
 
-  .app-shell > section:last-child {
+  .feature-highlights {
     position: absolute;
     bottom: clamp(20px, 3vh, 32px);
     left: 0;
@@ -49,11 +49,11 @@ body,
     z-index: 1;
   }
 
-  .app-shell > section:last-child > div {
+  .feature-highlights > div {
     white-space: nowrap;
   }
 
-  .app-shell > section:last-child > div:last-child {
+  .feature-highlights > div:last-child {
     text-align: right;
   }
 }
@@ -85,12 +85,12 @@ body,
     gap: 16px;
   }
 
-  .app-shell > section:last-child {
+  .feature-highlights {
     bottom: 16px;
     padding-inline: 32px;
   }
 
-  .app-shell > section:last-child > div {
+  .feature-highlights > div {
     font-size: 12px;
   }
 }
