@@ -111,6 +111,7 @@ export function Header({ activePage = "explore" }) {
         <button
           className="cursor-pointer rounded border border-[#dfe3df] bg-white px-[14px] py-2 text-xs font-semibold text-[#245556]"
           type="button"
+          onClick={(event) => handleNavigation(event, "/stays")}
         >
           Book Now
         </button>

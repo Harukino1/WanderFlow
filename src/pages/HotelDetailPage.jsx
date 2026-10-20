@@ -8,6 +8,25 @@ import {
 import searchFields from "../data/searchFields.js";
 import { hotels, pageContent } from "../data/content.js";
 
+function getAmenityIcon(amenity) {
+  const value = amenity.toLowerCase();
+
+  if (value.includes("breakfast") || value.includes("restaurant")) {
+    return "sparkle";
+  }
+  if (
+    value.includes("location") ||
+    value.includes("parking") ||
+    value.includes("view")
+  ) {
+    return "location";
+  }
+  if (value.includes("pool") || value.includes("beach")) {
+    return "map";
+  }
+  return "heart";
+}
+
 function BookingPanel({ hotel }) {
   const { booking } = pageContent.hotel;
   const room = hotel.rooms?.[0] || {
@@ -84,8 +103,10 @@ export default function HotelDetailPage() {
     hotels.find((item) =>
       window.location.pathname.endsWith(item.id),
     ) || hotels.find((item) => item.id === "hotel-fina") || hotels[0];
-  const { gallery, locationAction, save, share, photos, reviews, amenities } =
-    pageContent.hotel;
+  const { gallery, locationAction, photos, reviews } = pageContent.hotel;
+  const amenities = hotel.amenities.length
+    ? hotel.amenities
+    : pageContent.hotel.amenities;
 
   return (
     <main className="hotel-page bg-[#faf9f4] font-['Inter',Arial,sans-serif] text-[#244f50]">
@@ -121,20 +142,6 @@ export default function HotelDetailPage() {
               </span>
             </p>
           </div>
-          <div className="flex gap-2 max-[760px]:mt-5">
-            <button
-              className="rounded border border-[#dce1db] bg-white px-5 py-3 text-sm font-semibold"
-              type="button"
-            >
-              {save} <LineIcon name="heart" />
-            </button>
-            <button
-              className="rounded border border-[#dce1db] bg-white px-5 py-3 text-sm font-semibold"
-              type="button"
-            >
-              {share}
-            </button>
-          </div>
         </div>
         <div className="hotel-gallery mt-9 grid grid-cols-[2fr_1fr] gap-5 max-[760px]:grid-cols-1">
           <PlaceholderImage className="h-[600px] w-full rounded-xl max-[760px]:h-72" label={gallery[0].alt} />
@@ -160,11 +167,9 @@ export default function HotelDetailPage() {
               {hotel.description}
             </p>
             <div className="mt-12 grid grid-cols-4 gap-6 border-b border-[#dfe4df] pb-12 max-[760px]:grid-cols-2">
-              {amenities.map((amenity, index) => (
+              {amenities.map((amenity) => (
                 <div key={amenity}>
-                  <LineIcon
-                    name={["map", "heart", "sparkle", "location"][index]}
-                  />
+                  <LineIcon name={getAmenityIcon(amenity)} />
                   <p className="text-sm">{amenity}</p>
                 </div>
               ))}

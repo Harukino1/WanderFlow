@@ -100,9 +100,7 @@ export default function TourDetailPage() {
     ) || tours[0];
   const {
     gallery,
-    save,
-    share,
-    favorite,
+    details,
     photos,
     tabs,
     heading,
@@ -110,6 +108,13 @@ export default function TourDetailPage() {
     highlights,
     route,
   } = pageContent.tour;
+  const detail = details[tour.id] || {
+    gallery,
+    heading,
+    description,
+    highlights,
+    route,
+  };
 
   return (
     <main className="tour-detail-page bg-[#faf9f4] font-['Inter',Arial,sans-serif] text-[#244f50]">
@@ -132,32 +137,15 @@ export default function TourDetailPage() {
               </span>
             </p>
           </div>
-          <div className="flex gap-2 max-[760px]:mt-4">
-            <button
-              className="rounded border border-[#dce1db] bg-white px-4 py-2 text-[10px] font-semibold"
-              type="button"
-            >
-              {save}
-            </button>
-            <button
-              className="rounded border border-[#dce1db] bg-white px-4 py-2 text-[10px] font-semibold"
-              type="button"
-            >
-              {share}
-            </button>
-          </div>
         </div>
         <div className="mt-5 grid grid-cols-[2fr_1fr] gap-3 max-[760px]:grid-cols-1">
           <div className="relative">
-            <PlaceholderImage className="h-[350px] w-full rounded-lg max-[760px]:h-64" label={gallery[0].alt} />
-            <span className="absolute left-3 top-3 rounded bg-white px-2 py-1 text-[9px] font-semibold">
-              {favorite}
-            </span>
+            <PlaceholderImage className="h-[350px] w-full rounded-lg max-[760px]:h-64" label={detail.gallery[0].alt} />
           </div>
           <div className="grid gap-3">
-            <PlaceholderImage className="h-[168px] w-full rounded-lg" label={gallery[1].alt} />
+            <PlaceholderImage className="h-[168px] w-full rounded-lg" label={detail.gallery[1].alt} />
             <div className="relative">
-              <PlaceholderImage className="h-[168px] w-full rounded-lg" label={gallery[2].alt} />
+              <PlaceholderImage className="h-[168px] w-full rounded-lg" label={detail.gallery[2].alt} />
               <span className="absolute bottom-3 right-3 rounded bg-white px-3 py-2 text-[10px] font-semibold">
                 {photos}
               </span>
@@ -183,27 +171,27 @@ export default function TourDetailPage() {
             </nav>
             <div className="pt-5" id="experience">
               <h2 className="font-['Lora',Georgia,serif] text-2xl font-medium">
-                {heading}
+                {detail.heading}
               </h2>
               <p className="mt-3 text-xs leading-5 text-[#71807d]">
-                {description}
+                {detail.description}
               </p>
               <div className="mt-5 grid grid-cols-3 gap-5 text-[10px] max-[760px]:grid-cols-1">
                 <div>
                   <LineIcon name="map" />
-                  <strong className="mt-2 block">{highlights[0]}</strong>
+                  <strong className="mt-2 block">{detail.highlights[0]}</strong>
                 </div>
                 <div>
                   <LineIcon name="sparkle" />
-                  <strong className="mt-2 block">{highlights[1]}</strong>
+                  <strong className="mt-2 block">{detail.highlights[1]}</strong>
                 </div>
                 <div>
                   <LineIcon name="location" />
-                  <strong className="mt-2 block">{highlights[2]}</strong>
+                  <strong className="mt-2 block">{detail.highlights[2]}</strong>
                 </div>
               </div>
               <p className="mt-5 rounded bg-[#e8f0eb] px-4 py-3 text-[10px]">
-                {route}
+                {detail.route}
               </p>
             </div>
           </section>

@@ -141,10 +141,7 @@ export const pageContent = {
     filterTitle: "Filter your stay",
     reset: "Reset all",
     noResults: "No stays match the selected filters.",
-    sort: "Sort: Our favorites⌄",
-    ratingLabel: "Excellent",
     cancellation: "✓ Free cancellation\nNo prepayment required",
-    viewRooms: "View rooms",
   },
   hotel: {
     gallery: [
@@ -162,8 +159,6 @@ export const pageContent = {
       },
     ],
     locationAction: "View on map ↗",
-    save: "Save to trip",
-    share: "Share",
     photos: "View all 24 photos",
     reviews: "guest reviews",
     amenities: [
@@ -206,8 +201,6 @@ export const pageContent = {
     filterTitle: "Find your kind of day",
     reset: "Reset",
     results: "Experiences",
-    sort: "Sort: Our favorites⌄",
-    cardCategory: "SIGNATURE ADVENTURE",
     searchFields: [
       { icon: "location", label: "DESTINATION", value: "Mayon, Albay" },
       { icon: "calendar", label: "WHEN", value: "14–16 Jun 2027" },
@@ -234,9 +227,76 @@ export const pageContent = {
         alt: "ATV trail near Mount Mayon",
       },
     ],
-    save: "Save to trip ♡",
-    share: "Share",
-    favorite: "A MAYON FAVORITE",
+    details: {
+      "mayon-black-lava-atv-trail": {
+        gallery: [
+          { alt: "ATV riding through a Mayon lava trail" },
+          { alt: "Mount Mayon" },
+          { alt: "ATV trail near Mount Mayon" },
+        ],
+        heading: "Feel the pulse of Mayon, up close.",
+        description:
+          "This is Albay at its most thrilling. Gear up and ride guided all terrain vehicles along natural gullies carved by past eruptions. Cross rushing mountain streams, navigate rugged rock trails, and climb to the iconic 2006 Black Lava Wall—where you’ll stand right at the foot of the world’s most perfect cone.",
+        highlights: [
+          "Cross scenic streams and forested gullies along Mayon’s lower slopes.",
+          "Trek up massive, hardened lava deposits from Mayon’s historic eruption.",
+          "Enjoy unobstructed panoramic views of Legazpi City and the volcano peak.",
+        ],
+        route:
+          "Legazpi Base - Pawa Riverbed - Green Valley - 2006 Lava Wall - Helipad Lookout",
+      },
+      "bicol-culinary-masterclass": {
+        gallery: [
+          { alt: "Preparing traditional Pinangat in Camalig" },
+          { alt: "Fresh Bicolano ingredients" },
+          { alt: "Farm lunch in Camalig" },
+        ],
+        heading: "Taste the recipes that make Bicol unforgettable.",
+        description:
+          "Spend a delicious half day in Camalig learning the secrets of Bicolano cooking. Roll up your sleeves for a hands-on Pinangat class, sample artisanal sili ice cream, and share a generous farm lunch made with ingredients from the surrounding countryside.",
+        highlights: [
+          "Make authentic Pinangat with a local Bicolano cook.",
+          "Try surprising flavors, including artisanal sili ice cream.",
+          "Share a relaxed farm lunch with locally grown ingredients.",
+        ],
+        route:
+          "Camalig Market - Cooking Kitchen - Sili Ice Cream Tasting - Farm Lunch",
+      },
+      "coron-island-hopping": {
+        gallery: [
+          { alt: "Kayangan Lake in Coron" },
+          { alt: "Snorkeling in a Coron lagoon" },
+          { alt: "Limestone islands around Coron" },
+        ],
+        heading: "Find your own corner of Coron’s blue.",
+        description:
+          "Set out across Coron’s clear waters for a full day of swimming, snorkeling, and island discoveries. Cruise between dramatic limestone cliffs, cool off in hidden lagoons, and take in the famous view over Kayangan Lake with a local boat crew.",
+        highlights: [
+          "Swim in clear lagoons surrounded by towering limestone cliffs.",
+          "Snorkel coral gardens teeming with tropical marine life.",
+          "Reach the iconic viewpoint above Kayangan Lake.",
+        ],
+        route:
+          "Coron Town - Kayangan Lake - Twin Lagoon - Coral Garden - CYC Beach",
+      },
+      "vigan-heritage-walk": {
+        gallery: [
+          { alt: "Calle Crisologo in Vigan" },
+          { alt: "Ilocano food tasting" },
+          { alt: "Vigan heritage architecture" },
+        ],
+        heading: "Walk through the living story of Vigan.",
+        description:
+          "Follow Calle Crisologo with a local historian who brings Vigan’s Spanish-era streets to life. Along the way, taste beloved Ilocano classics, meet the makers preserving old crafts, and uncover the stories behind this remarkable heritage city.",
+        highlights: [
+          "Explore Calle Crisologo with a knowledgeable local historian.",
+          "Taste Ilocano favorites and regional street-food classics.",
+          "Discover the craft, homes, and stories behind Vigan’s heritage.",
+        ],
+        route:
+          "Vigan Plaza - Calle Crisologo - Hidden Courtyards - Local Food Stops",
+      },
+    },
     photos: "All 18 photos",
     tabs: [
       "The experience",

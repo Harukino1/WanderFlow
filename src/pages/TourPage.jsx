@@ -73,15 +73,8 @@ function TourCard({ tour }) {
           item={tour}
         />
         <span className="absolute left-3 top-3 rounded bg-white px-2 py-1 text-[10px] font-semibold text-[#397071]">
-          {pageContent.tours.cardCategory}
+          {tour.category}
         </span>
-        <button
-          className="absolute right-3 top-3 rounded-full border-0 bg-white p-2 text-[#397071]"
-          type="button"
-          aria-label={`Save ${tour.title}`}
-        >
-          <LineIcon name="heart" />
-        </button>
       </div>
       <div className="p-4">
         <div className="flex items-center justify-between text-[10px] text-[#8a9691]">
@@ -238,7 +231,6 @@ export default function TourPage() {
           <section>
             <div className="mb-4 flex justify-between text-xs text-[#71807d]">
               <strong>{pageContent.tours.results}</strong>
-              <span>{pageContent.tours.sort}</span>
             </div>
             <div className="grid grid-cols-2 gap-4 max-[900px]:grid-cols-1">
               {visibleTours.map((tour) => (

@@ -71,13 +71,6 @@ function StayCard({ stay }) {
               {stay.title}
             </h2>
           </div>
-          <button
-            className="border-0 bg-transparent p-1 text-[#245556]"
-            type="button"
-            aria-label={`Save ${stay.title}`}
-          >
-            <LineIcon name="heart" />
-          </button>
         </div>
         <p className="my-2 text-xs text-[#526866]">
           <strong className="rounded bg-[#e8f0eb] px-2 py-1 text-[#397071]">
@@ -207,7 +200,6 @@ export default function StaysPage() {
                 </button>
               ))}
             </div>
-            <span>{pageContent.stays.sort}</span>
           </div>
           <div className="grid gap-4">
             {visibleHotels.length > 0 ? (
