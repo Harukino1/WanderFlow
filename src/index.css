@@ -168,7 +168,19 @@ body,
   min-height: 100dvh;
 }
 
+.tour-page {
+  min-height: 100dvh;
+}
+
+.tour-page .site-footer {
+  position: static;
+}
+
 .stays-page .app-header {
+  height: clamp(59px, 8vh, 80px);
+}
+
+.hotel-page .app-header {
   height: clamp(59px, 8vh, 80px);
 }
 

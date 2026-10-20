@@ -1,8 +1,7 @@
 const navigationLinks = [
   { label: 'Explore', href: '/' },
   { label: 'Stays', href: '/stays' },
-  { label: 'Tours', href: '#tours' },
-  { label: 'Trip planner', href: '#planner' },
+  { label: 'Tours', href: '/tours' },
 ]
 
 export function LineIcon({ name }) {
@@ -30,13 +29,13 @@ export function Header({ activePage = 'explore' }) {
   }
 
   return (
-    <header className="app-header flex items-center gap-6 bg-[#fcfcfa] px-[47px] max-[760px]:h-[68px] max-[760px]:px-[22px]">
+    <header className="app-header relative flex h-[clamp(59px,8vh,80px)] items-center gap-6 bg-[#fcfcfa] px-[47px] max-[760px]:h-[68px] max-[760px]:px-[22px]">
       <a className="mr-auto font-['Lora',Georgia,serif] text-2xl font-semibold leading-none tracking-[-.7px] text-[#245556] no-underline" href="/" onClick={(event) => handleNavigation(event, '/')} aria-label="WonderFlow home">
         WonderFlow<span>.</span>
       </a>
-      <nav className="flex h-full gap-[25px] max-[760px]:hidden" aria-label="Primary navigation">
+      <nav className="absolute left-1/2 flex h-full -translate-x-1/2 gap-[25px] max-[760px]:hidden" aria-label="Primary navigation">
         {navigationLinks.map(({ label, href }) => (
-          <a className={`relative flex items-center text-sm no-underline ${label.toLowerCase().replace(' ', '-') === activePage ? 'text-[#225354] after:absolute after:bottom-[14px] after:left-0 after:right-0 after:h-0.5 after:bg-[#d36d56]' : 'text-[#8a9691]'}`} href={href} onClick={(event) => handleNavigation(event, href)} key={label}>{label}</a>
+          <a className={`relative flex items-center text-sm no-underline ${label.toLowerCase().replace(' ', '-') === activePage ? 'text-[#225354] after:absolute after:bottom-[20px] after:left-0 after:right-0 after:h-0.5 after:bg-[#d36d56]' : 'text-[#8a9691]'}`} href={href} onClick={(event) => handleNavigation(event, href)} key={label}>{label}</a>
         ))}
       </nav>
       <div className="ml-[34px] flex items-center gap-[15px] max-[760px]:hidden">
