@@ -1,16 +1,185 @@
-import { Footer, Header, LineIcon, SearchField } from '../components/WonderFlowShared.jsx'
-import searchFields from '../data/searchFields.js'
+import {
+  Footer,
+  Header,
+  LineIcon,
+  SearchField,
+} from "../components/WonderFlowShared.jsx";
+import searchFields from "../data/searchFields.js";
+import { hotels, pageContent, siteContent } from "../data/content.js";
 
-const gallery = [
-  'https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=85',
-  'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=85',
-  'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=900&q=85',
-]
+const hotel = hotels.find((item) => item.id === "hotel-fina");
 
 function BookingPanel() {
-  return <aside className="booking-panel rounded-xl border border-[#dce1db] bg-white p-8 shadow-[0_12px_30px_rgba(31,65,60,.07)]"><p className="text-xs font-semibold uppercase tracking-wide text-[#d36d56]">Your stay at Hotel Fina</p><p className="my-6 text-4xl font-semibold text-[#244f50]">₱2,966 <span className="text-sm font-normal text-[#71807d]">/ night</span></p><div className="grid grid-cols-2 gap-6 border-t border-[#e1e5df] py-5 text-sm"><div><span className="block text-[10px] text-[#71807d]">CHECK-IN</span><strong>17 Oct 2026</strong></div><div><span className="block text-[10px] text-[#71807d]">CHECK-OUT</span><strong>20 Oct 2026</strong></div></div><div className="rounded border border-[#dce1db] px-4 py-3 text-sm">2 adults · 1 room</div><p className="mt-7 text-sm font-semibold">Classic Rooftop View · 5 nights</p><div className="mt-5 grid gap-4 border-b border-[#e1e5df] pb-5 text-sm"><div className="flex justify-between"><span>₱2,966 × 5 nights</span><span>₱14,830</span></div><div className="flex justify-between"><span>Taxes &amp; fees</span><span>Included</span></div></div><div className="flex justify-between py-6 text-xl font-semibold"><span>Total</span><span>₱14,830</span></div><button className="w-full rounded bg-[#235a5b] px-5 py-4 text-sm font-semibold text-white" type="button">Reserve your stay</button><p className="mt-4 text-center text-xs text-[#71807d]">You won’t be charged yet.</p><ul className="mt-7 grid gap-4 pl-0 text-sm text-[#244f50] [&_li]:list-none"><li>✓ &nbsp; Free cancellation until 5 June</li><li>✓ &nbsp; Breakfast for two, every morning</li></ul></aside>
+  const { booking } = pageContent.hotel;
+
+  return (
+    <aside className="booking-panel rounded-xl border border-[#dce1db] bg-white p-8 shadow-[0_12px_30px_rgba(31,65,60,.07)]">
+      <p className="text-xs font-semibold uppercase tracking-wide text-[#d36d56]">
+        {booking.heading}
+      </p>
+      <p className="my-6 text-4xl font-semibold text-[#244f50]">
+        {hotel.getFormattedPrice().replace("/night", "")}{" "}
+        <span className="text-sm font-normal text-[#71807d]">
+          {siteContent.search.nightUnit}
+        </span>
+      </p>
+      <div className="grid grid-cols-2 gap-6 border-t border-[#e1e5df] py-5 text-sm">
+        <div>
+          <span className="block text-[10px] text-[#71807d]">
+            {booking.checkIn}
+          </span>
+          <strong>{booking.dates[0]}</strong>
+        </div>
+        <div>
+          <span className="block text-[10px] text-[#71807d]">
+            {booking.checkOut}
+          </span>
+          <strong>{booking.dates[1]}</strong>
+        </div>
+      </div>
+      <div className="rounded border border-[#dce1db] px-4 py-3 text-sm">
+        {booking.guests}
+      </div>
+      <p className="mt-7 text-sm font-semibold">
+        {hotel.rooms[0].title} · {booking.nights}
+      </p>
+      <div className="mt-5 grid gap-4 border-b border-[#e1e5df] pb-5 text-sm">
+        <div className="flex justify-between">
+          <span>
+            {hotel.getFormattedPrice().replace("/night", "")} × {booking.nights}
+          </span>
+          <span>{booking.totalAmount}</span>
+        </div>
+        <div className="flex justify-between">
+          <span>{booking.taxes}</span>
+          <span>{booking.included}</span>
+        </div>
+      </div>
+      <div className="flex justify-between py-6 text-xl font-semibold">
+        <span>{booking.total}</span>
+        <span>{booking.totalAmount}</span>
+      </div>
+      <button
+        className="w-full rounded bg-[#235a5b] px-5 py-4 text-sm font-semibold text-white"
+        type="button"
+      >
+        {booking.reserve}
+      </button>
+      <p className="mt-4 text-center text-xs text-[#71807d]">
+        {booking.notice}
+      </p>
+      <ul className="mt-7 grid gap-4 pl-0 text-sm text-[#244f50] [&_li]:list-none">
+        {booking.benefits.map((benefit) => (
+          <li key={benefit}>{benefit}</li>
+        ))}
+      </ul>
+    </aside>
+  );
 }
 
 export default function HotelDetailPage() {
-  return <main className="hotel-page bg-[#faf9f4] font-['Inter',Arial,sans-serif] text-[#244f50]"><Header activePage="stays" /><div className="stays-search-wrap bg-[#f0ede4] px-[clamp(32px,6vw,90px)] py-6"><div className="stays-search rounded-lg border border-[#e1e4df] bg-white px-5 py-4 shadow-[0_8px_18px_rgba(31,65,60,.08)]"><div className="flex items-center gap-8 max-[760px]:grid max-[760px]:gap-4">{searchFields.map((field) => <SearchField {...field} key={field.label} />)}<button className="min-w-[142px] rounded-[5px] border-0 bg-[#235a5b] px-4 py-3 text-sm font-semibold text-white" type="button">Find your stay <LineIcon name="search" /></button></div></div></div><div className="hotel-content mx-auto max-w-[1320px] px-[clamp(32px,6vw,90px)] py-10"><div className="flex items-end justify-between gap-5 max-[760px]:block"><div><h1 className="font-['Lora',Georgia,serif] text-6xl font-medium max-[760px]:text-4xl">Hotel Fina</h1><p className="mt-4 text-sm">Praiano, Amalfi Coast, Italy · View on map ↗ <strong className="ml-6 rounded bg-[#e8f0eb] px-3 py-2">9.1 · Exceptional</strong><span className="ml-5 text-[#71807d]">181 guest reviews</span></p></div><div className="flex gap-2 max-[760px]:mt-5"><button className="rounded border border-[#dce1db] bg-white px-5 py-3 text-sm font-semibold" type="button">Save to trip <LineIcon name="heart" /></button><button className="rounded border border-[#dce1db] bg-white px-5 py-3 text-sm font-semibold" type="button">Share</button></div></div><div className="hotel-gallery mt-9 grid grid-cols-[2fr_1fr] gap-5 max-[760px]:grid-cols-1"><img className="h-[600px] w-full rounded-xl object-cover max-[760px]:h-72" src={gallery[0]} alt="Hotel Fina rooftop pool" /><div className="grid gap-5"><img className="h-[290px] w-full rounded-xl object-cover" src={gallery[1]} alt="Hotel Fina room" /><div className="relative"><img className="h-[290px] w-full rounded-xl object-cover" src={gallery[2]} alt="Hotel Fina exterior" /><button className="absolute bottom-4 right-4 rounded bg-white px-4 py-3 text-sm font-semibold" type="button">View all 24 photos</button></div></div></div><div className="hotel-description mt-16 grid grid-cols-[1fr_400px] gap-12 max-[900px]:grid-cols-1"><section><h2 className="font-['Lora',Georgia,serif] text-4xl font-medium">Your modern gateway to the heart of Tabaco.</h2><p className="mt-6 max-w-4xl text-lg leading-8 text-[#71807d]">Nestled in the vibrant center of Tabaco City with direct access to Albay’s coastal and volcanic wonders, Hotel Fina offers a stylish blend of urban sophistication and warm Bicolano hospitality. Relax by the rooftop pool overlooking Mount Mayon, enjoy contemporary dining, and experience a seamless stay designed for both leisure and discovery.</p><div className="mt-12 grid grid-cols-4 gap-6 border-b border-[#dfe4df] pb-12 max-[760px]:grid-cols-2"><div><LineIcon name="map" /><p className="text-sm">Rooftop Pool &amp; Bar</p></div><div><LineIcon name="heart" /><p className="text-sm">Modern Guest Rooms</p></div><div><LineIcon name="sparkle" /><p className="text-sm">Complimentary Breakfast</p></div><div><LineIcon name="location" /><p className="text-sm">City Center Location</p></div></div></section><BookingPanel /></div></div><Footer /></main>
+  const { gallery, locationAction, save, share, photos, reviews, amenities } =
+    pageContent.hotel;
+
+  return (
+    <main className="hotel-page bg-[#faf9f4] font-['Inter',Arial,sans-serif] text-[#244f50]">
+      <Header activePage="stays" />
+      <div className="stays-search-wrap bg-[#f0ede4] px-[clamp(32px,6vw,90px)] py-6">
+        <div className="stays-search rounded-lg border border-[#e1e4df] bg-white px-5 py-4 shadow-[0_8px_18px_rgba(31,65,60,.08)]">
+          <div className="flex items-center gap-8 max-[760px]:grid max-[760px]:gap-4">
+            {searchFields.map((field) => (
+              <SearchField {...field} key={field.label} />
+            ))}
+            <button
+              className="min-w-[142px] rounded-[5px] border-0 bg-[#235a5b] px-4 py-3 text-sm font-semibold text-white"
+              type="button"
+            >
+              {siteContent.search.stayButton} <LineIcon name="search" />
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="hotel-content mx-auto max-w-[1320px] px-[clamp(32px,6vw,90px)] py-10">
+        <div className="flex items-end justify-between gap-5 max-[760px]:block">
+          <div>
+            <h1 className="font-['Lora',Georgia,serif] text-6xl font-medium max-[760px]:text-4xl">
+              {hotel.title}
+            </h1>
+            <p className="mt-4 text-sm">
+              {hotel.location} · {locationAction}{" "}
+              <strong className="ml-6 rounded bg-[#e8f0eb] px-3 py-2">
+                {hotel.rating} · Excellent
+              </strong>
+              <span className="ml-5 text-[#71807d]">
+                {hotel.reviewCount} {reviews}
+              </span>
+            </p>
+          </div>
+          <div className="flex gap-2 max-[760px]:mt-5">
+            <button
+              className="rounded border border-[#dce1db] bg-white px-5 py-3 text-sm font-semibold"
+              type="button"
+            >
+              {save} <LineIcon name="heart" />
+            </button>
+            <button
+              className="rounded border border-[#dce1db] bg-white px-5 py-3 text-sm font-semibold"
+              type="button"
+            >
+              {share}
+            </button>
+          </div>
+        </div>
+        <div className="hotel-gallery mt-9 grid grid-cols-[2fr_1fr] gap-5 max-[760px]:grid-cols-1">
+          <img
+            className="h-[600px] w-full rounded-xl object-cover max-[760px]:h-72"
+            src={gallery[0].url}
+            alt={gallery[0].alt}
+          />
+          <div className="grid gap-5">
+            <img
+              className="h-[290px] w-full rounded-xl object-cover"
+              src={gallery[1].url}
+              alt={gallery[1].alt}
+            />
+            <div className="relative">
+              <img
+                className="h-[290px] w-full rounded-xl object-cover"
+                src={gallery[2].url}
+                alt={gallery[2].alt}
+              />
+              <button
+                className="absolute bottom-4 right-4 rounded bg-white px-4 py-3 text-sm font-semibold"
+                type="button"
+              >
+                {photos}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="hotel-description mt-16 grid grid-cols-[1fr_400px] gap-12 max-[900px]:grid-cols-1">
+          <section>
+            <h2 className="font-['Lora',Georgia,serif] text-4xl font-medium">
+              {hotel.tagline}
+            </h2>
+            <p className="mt-6 max-w-4xl text-lg leading-8 text-[#71807d]">
+              {hotel.description}
+            </p>
+            <div className="mt-12 grid grid-cols-4 gap-6 border-b border-[#dfe4df] pb-12 max-[760px]:grid-cols-2">
+              {amenities.map((amenity, index) => (
+                <div key={amenity}>
+                  <LineIcon
+                    name={["map", "heart", "sparkle", "location"][index]}
+                  />
+                  <p className="text-sm">{amenity}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+          <BookingPanel />
+        </div>
+      </div>
+      <Footer />
+    </main>
+  );
 }
