@@ -2,15 +2,17 @@ import {
   Footer,
   Header,
   LineIcon,
+  PlaceholderImage,
   SearchField,
 } from "../components/WonderFlowShared.jsx";
 import searchFields from "../data/searchFields.js";
-import { hotels, pageContent, siteContent } from "../data/content.js";
+import { hotels, pageContent } from "../data/content.js";
 
-const hotel = hotels.find((item) => item.id === "hotel-fina");
-
-function BookingPanel() {
+function BookingPanel({ hotel }) {
   const { booking } = pageContent.hotel;
+  const room = hotel.rooms?.[0] || {
+    title: "Standard room",
+  };
 
   return (
     <aside className="booking-panel rounded-xl border border-[#dce1db] bg-white p-8 shadow-[0_12px_30px_rgba(31,65,60,.07)]">
@@ -20,7 +22,7 @@ function BookingPanel() {
       <p className="my-6 text-4xl font-semibold text-[#244f50]">
         {hotel.getFormattedPrice().replace("/night", "")}{" "}
         <span className="text-sm font-normal text-[#71807d]">
-          {siteContent.search.nightUnit}
+          / night
         </span>
       </p>
       <div className="grid grid-cols-2 gap-6 border-t border-[#e1e5df] py-5 text-sm">
@@ -41,7 +43,7 @@ function BookingPanel() {
         {booking.guests}
       </div>
       <p className="mt-7 text-sm font-semibold">
-        {hotel.rooms[0].title} · {booking.nights}
+        {room.title} · {booking.nights}
       </p>
       <div className="mt-5 grid gap-4 border-b border-[#e1e5df] pb-5 text-sm">
         <div className="flex justify-between">
@@ -78,6 +80,10 @@ function BookingPanel() {
 }
 
 export default function HotelDetailPage() {
+  const hotel =
+    hotels.find((item) =>
+      window.location.pathname.endsWith(item.id),
+    ) || hotels.find((item) => item.id === "hotel-fina") || hotels[0];
   const { gallery, locationAction, save, share, photos, reviews, amenities } =
     pageContent.hotel;
 
@@ -94,7 +100,7 @@ export default function HotelDetailPage() {
               className="min-w-[142px] rounded-[5px] border-0 bg-[#235a5b] px-4 py-3 text-sm font-semibold text-white"
               type="button"
             >
-              {siteContent.search.stayButton} <LineIcon name="search" />
+              Find your stay <LineIcon name="search" />
             </button>
           </div>
         </div>
@@ -131,23 +137,11 @@ export default function HotelDetailPage() {
           </div>
         </div>
         <div className="hotel-gallery mt-9 grid grid-cols-[2fr_1fr] gap-5 max-[760px]:grid-cols-1">
-          <img
-            className="h-[600px] w-full rounded-xl object-cover max-[760px]:h-72"
-            src={gallery[0].url}
-            alt={gallery[0].alt}
-          />
+          <PlaceholderImage className="h-[600px] w-full rounded-xl max-[760px]:h-72" label={gallery[0].alt} />
           <div className="grid gap-5">
-            <img
-              className="h-[290px] w-full rounded-xl object-cover"
-              src={gallery[1].url}
-              alt={gallery[1].alt}
-            />
+            <PlaceholderImage className="h-[290px] w-full rounded-xl" label={gallery[1].alt} />
             <div className="relative">
-              <img
-                className="h-[290px] w-full rounded-xl object-cover"
-                src={gallery[2].url}
-                alt={gallery[2].alt}
-              />
+              <PlaceholderImage className="h-[290px] w-full rounded-xl" label={gallery[2].alt} />
               <button
                 className="absolute bottom-4 right-4 rounded bg-white px-4 py-3 text-sm font-semibold"
                 type="button"
@@ -176,7 +170,7 @@ export default function HotelDetailPage() {
               ))}
             </div>
           </section>
-          <BookingPanel />
+          <BookingPanel hotel={hotel} />
         </div>
       </div>
       <Footer />

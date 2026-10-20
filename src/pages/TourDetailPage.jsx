@@ -2,11 +2,10 @@ import {
   Footer,
   Header,
   LineIcon,
+  PlaceholderImage,
   SearchField,
 } from "../components/WonderFlowShared.jsx";
-import { pageContent, siteContent, tours } from "../data/content.js";
-
-const tour = tours.find((item) => item.id === "mayon-black-lava-atv-trail");
+import { pageContent, tours } from "../data/content.js";
 
 function TourSearch() {
   const { searchFields } = pageContent.tour;
@@ -21,14 +20,14 @@ function TourSearch() {
           className="rounded-[5px] border-0 bg-[#235a5b] px-4 py-3 text-xs font-semibold text-white max-[760px]:col-span-2"
           type="button"
         >
-          {siteContent.search.tourButton} <LineIcon name="search" />
+          Find tours <LineIcon name="search" />
         </button>
       </div>
     </div>
   );
 }
 
-function BookingPanel() {
+function BookingPanel({ tour }) {
   const { booking } = pageContent.tour;
 
   return (
@@ -39,7 +38,7 @@ function BookingPanel() {
       <p className="my-4 text-3xl font-semibold">
         {tour.getFormattedPrice().replace("/person", "")}{" "}
         <span className="text-[10px] font-normal text-[#71807d]">
-          {siteContent.search.personUnit}
+          / person
         </span>
       </p>
       <p className="border-b border-[#e1e5df] pb-4 text-[10px] text-[#71807d]">
@@ -95,6 +94,10 @@ function BookingPanel() {
 }
 
 export default function TourDetailPage() {
+  const tour =
+    tours.find((item) =>
+      window.location.pathname.endsWith(item.id),
+    ) || tours[0];
   const {
     gallery,
     save,
@@ -146,27 +149,15 @@ export default function TourDetailPage() {
         </div>
         <div className="mt-5 grid grid-cols-[2fr_1fr] gap-3 max-[760px]:grid-cols-1">
           <div className="relative">
-            <img
-              className="h-[350px] w-full rounded-lg object-cover max-[760px]:h-64"
-              src={gallery[0].url}
-              alt={gallery[0].alt}
-            />
+            <PlaceholderImage className="h-[350px] w-full rounded-lg max-[760px]:h-64" label={gallery[0].alt} />
             <span className="absolute left-3 top-3 rounded bg-white px-2 py-1 text-[9px] font-semibold">
               {favorite}
             </span>
           </div>
           <div className="grid gap-3">
-            <img
-              className="h-[168px] w-full rounded-lg object-cover"
-              src={gallery[1].url}
-              alt={gallery[1].alt}
-            />
+            <PlaceholderImage className="h-[168px] w-full rounded-lg" label={gallery[1].alt} />
             <div className="relative">
-              <img
-                className="h-[168px] w-full rounded-lg object-cover"
-                src={gallery[2].url}
-                alt={gallery[2].alt}
-              />
+              <PlaceholderImage className="h-[168px] w-full rounded-lg" label={gallery[2].alt} />
               <span className="absolute bottom-3 right-3 rounded bg-white px-3 py-2 text-[10px] font-semibold">
                 {photos}
               </span>
@@ -216,7 +207,7 @@ export default function TourDetailPage() {
               </p>
             </div>
           </section>
-          <BookingPanel />
+          <BookingPanel tour={tour} />
         </div>
       </div>
       <Footer />

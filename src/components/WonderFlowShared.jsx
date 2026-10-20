@@ -1,4 +1,9 @@
-import { siteContent } from "../data/content.js";
+const brand = "WonderFlow";
+const navigation = [
+  { label: "Explore", href: "/" },
+  { label: "Stays", href: "/stays" },
+  { label: "Tours", href: "/tours" },
+];
 
 export function LineIcon({ name }) {
   const paths = {
@@ -76,16 +81,16 @@ export function Header({ activePage = "explore" }) {
         className="mr-auto font-['Lora',Georgia,serif] text-2xl font-semibold leading-none tracking-[-.7px] text-[#245556] no-underline"
         href="/"
         onClick={(event) => handleNavigation(event, "/")}
-        aria-label={siteContent.header.homeLabel}
+        aria-label="WonderFlow home"
       >
-        {siteContent.brand}
+        {brand}
         <span>.</span>
       </a>
       <nav
         className="absolute left-1/2 flex h-full -translate-x-1/2 gap-[25px] max-[760px]:hidden"
-        aria-label={siteContent.header.primaryNavigation}
+        aria-label="Primary navigation"
       >
-        {siteContent.navigation.map(({ label, href }) => (
+        {navigation.map(({ label, href }) => (
           <a
             className={`relative flex items-center text-sm no-underline ${label.toLowerCase().replace(" ", "-") === activePage ? "text-[#225354] after:absolute after:bottom-[20px] after:left-0 after:right-0 after:h-0.5 after:bg-[#d36d56]" : "text-[#8a9691]"}`}
             href={href}
@@ -101,20 +106,20 @@ export function Header({ activePage = "explore" }) {
           className="cursor-pointer border-0 bg-transparent p-0 text-xs text-[#385f5e]"
           type="button"
         >
-          {siteContent.header.language}
+          EN / PHP
         </button>
         <button
           className="cursor-pointer rounded border border-[#dfe3df] bg-white px-[14px] py-2 text-xs font-semibold text-[#245556]"
           type="button"
         >
-          {siteContent.header.book}
+          Book Now
         </button>
       </div>
       <button
         className="hidden cursor-pointer border-0 bg-transparent text-sm font-semibold text-[#245556] max-[760px]:block"
         type="button"
       >
-        {siteContent.header.menu}
+        Menu
       </button>
     </header>
   );
@@ -123,12 +128,16 @@ export function Header({ activePage = "explore" }) {
 export function Footer() {
   return (
     <footer className="site-footer flex items-center justify-between border-t border-[#d7e1dc] bg-[#edf3ef] px-[clamp(32px,5vw,90px)] py-5 text-xs text-[#58716b] max-[760px]:grid max-[760px]:gap-3 max-[760px]:px-[25px]">
-      <p className="m-0">{siteContent.footer.copyright}</p>
+      <p className="m-0">© 2026 WonderFlow. Travel with intention.</p>
       <nav
         className="flex gap-6 max-[760px]:gap-4"
-        aria-label={siteContent.header.footerNavigation}
+        aria-label="Footer navigation"
       >
-        {siteContent.footer.links.map(({ label, href }) => (
+        {[
+          ["About", "#about"],
+          ["Contact", "#contact"],
+          ["Privacy", "#privacy"],
+        ].map(([label, href]) => (
           <a
             className="text-inherit no-underline hover:text-[#245556]"
             href={href}
@@ -154,6 +163,34 @@ export function SearchField({ icon, label, value }) {
           {value}
         </span>
       </div>
+    </div>
+  );
+}
+
+export function CatalogImage({ item, className = "" }) {
+  if (item.imageUrl) {
+    return <img className={className} src={item.imageUrl} alt={item.title} />;
+  }
+
+  return (
+    <div
+      className={`flex items-center justify-center bg-[#dfeae3] p-5 text-center text-xs font-semibold uppercase tracking-[.12em] text-[#397071] ${className}`}
+      role="img"
+      aria-label={item.imagePlaceholder}
+    >
+      {item.imagePlaceholder}
+    </div>
+  );
+}
+
+export function PlaceholderImage({ label, className = "" }) {
+  return (
+    <div
+      className={`flex items-center justify-center bg-[#dfeae3] p-5 text-center text-xs font-semibold uppercase tracking-[.12em] text-[#397071] ${className}`}
+      role="img"
+      aria-label={label}
+    >
+      {label}
     </div>
   );
 }

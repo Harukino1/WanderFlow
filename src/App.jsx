@@ -15,14 +15,14 @@ function App() {
   }, []);
 
   const Page =
-    pathname === "/stays/hotel-fina"
+    pathname.startsWith("/stays/") && pathname !== "/stays"
       ? HotelDetailPage
       : pathname === "/stays"
         ? StaysPage
-        : pathname === "/tours"
-          ? TourPage
-          : pathname === "/tours/mayon-black-lava-atv-trail"
-            ? TourDetailPage
+        : pathname.startsWith("/tours/") && pathname !== "/tours"
+          ? TourDetailPage
+          : pathname === "/tours"
+            ? TourPage
             : LandingPage;
 
   return (

@@ -1,5 +1,12 @@
-import { Footer, Header, LineIcon } from "../components/WonderFlowShared.jsx";
-import { pageContent, siteContent, tours } from "../data/content.js";
+import {
+  CatalogImage,
+  Footer,
+  Header,
+  LineIcon,
+  PlaceholderImage,
+} from "../components/WonderFlowShared.jsx";
+import { useMemo, useState } from "react";
+import { pageContent, tours } from "../data/content.js";
 
 function TourSearch() {
   const { searchFields } = pageContent.tours;
@@ -43,7 +50,7 @@ function TourSearch() {
         className="rounded-[5px] border-0 bg-[#235a5b] px-4 py-3 text-sm font-semibold text-white max-[760px]:col-span-2"
         type="button"
       >
-        {siteContent.search.tourButton} <LineIcon name="search" />
+        Find tours <LineIcon name="search" />
       </button>
     </section>
   );
@@ -51,7 +58,7 @@ function TourSearch() {
 
 function TourCard({ tour }) {
   const openDetails = () => {
-    window.history.pushState({}, "", "/tours/mayon-black-lava-atv-trail");
+    window.history.pushState({}, "", `/tours/${tour.id}`);
     window.dispatchEvent(new PopStateEvent("popstate"));
   };
 
@@ -61,10 +68,9 @@ function TourCard({ tour }) {
       onClick={openDetails}
     >
       <div className="relative">
-        <img
+        <CatalogImage
           className="h-[155px] w-full object-cover"
-          src={tour.imageUrl}
-          alt={tour.title}
+          item={tour}
         />
         <span className="absolute left-3 top-3 rounded bg-white px-2 py-1 text-[10px] font-semibold text-[#397071]">
           {pageContent.tours.cardCategory}
@@ -81,25 +87,25 @@ function TourCard({ tour }) {
         <div className="flex items-center justify-between text-[10px] text-[#8a9691]">
           <span>{tour.location}</span>
           <span>
-            {siteContent.search.ratingPrefix} {tour.rating}
+            ★ {tour.rating}
           </span>
         </div>
         <h2 className="mb-2 mt-2 font-['Lora',Georgia,serif] text-[22px] font-medium leading-tight">
           {tour.title}
         </h2>
         <p className="m-0 min-h-[42px] text-xs leading-5 text-[#71807d]">
-          {tour.description} {pageContent.tours.included}
+          {tour.description} Guide, equipment, and entrance fees included.
         </p>
         <div className="mt-3 flex items-center justify-between border-t border-[#e3e6e1] pt-3">
           <strong className="text-lg">
             {tour.getFormattedPrice().replace("/person", "")}
             <span className="text-[10px] font-normal text-[#71807d]">
               {" "}
-              {siteContent.search.personUnit}
+              / person
             </span>
           </strong>
           <span className="text-sm text-[#397071]">
-            {siteContent.search.actionIndicator}
+            ↗
           </span>
         </div>
       </div>
@@ -107,7 +113,7 @@ function TourCard({ tour }) {
   );
 }
 
-function FilterGroup({ title, options }) {
+function FilterGroup({ title, options, selectedOptions, onChange }) {
   return (
     <fieldset className="border-0 border-t border-[#e3e6e1] px-0 py-4">
       <legend className="mb-3 text-sm font-semibold">{title}</legend>
@@ -117,7 +123,12 @@ function FilterGroup({ title, options }) {
             className="flex items-center gap-2 text-xs text-[#526866]"
             key={option}
           >
-            <input className="accent-[#235a5b]" type="checkbox" />
+            <input
+              className="accent-[#235a5b]"
+              type="checkbox"
+              checked={selectedOptions.includes(option)}
+              onChange={() => onChange(option)}
+            />
             {option}
           </label>
         ))}
@@ -127,6 +138,45 @@ function FilterGroup({ title, options }) {
 }
 
 export default function TourPage() {
+  const [selectedCategory, setSelectedCategory] = useState("All experiences");
+  const [selectedFilters, setSelectedFilters] = useState([]);
+  const toggleFilter = (filter) =>
+    setSelectedFilters((current) =>
+      current.includes(filter)
+        ? current.filter((item) => item !== filter)
+        : [...current, filter],
+    );
+  const filterGroups = [
+    {
+      title: "Explore around",
+      options: [...new Set(tours.map((tour) => tour.location.split(" · ")[0]))],
+    },
+    {
+      title: "Time well spent",
+      options: ["Half day", "Full day"],
+    },
+  ];
+  const visibleTours = useMemo(
+    () =>
+      tours.filter((tour) => {
+        const categoryMatch =
+          selectedCategory === "All experiences" ||
+          tour.category === selectedCategory;
+        const filtersMatch = selectedFilters.every(
+          (filter) =>
+            tour.location.startsWith(filter) ||
+            (filter === "Half day" && tour.durationHours <= 4) ||
+            (filter === "Full day" && tour.durationHours > 4),
+        );
+        return categoryMatch && filtersMatch;
+      }),
+    [selectedCategory, selectedFilters],
+  );
+  const resetFilters = () => {
+    setSelectedCategory("All experiences");
+    setSelectedFilters([]);
+  };
+
   return (
     <main className="tour-page bg-[#faf9f4] font-['Inter',Arial,sans-serif] text-[#244f50]">
       <Header activePage="tours" />
@@ -142,20 +192,20 @@ export default function TourPage() {
             {pageContent.tours.heroDescription}
           </p>
         </div>
-        <img
-          className="h-[180px] w-[52%] rounded-lg object-cover max-[760px]:h-52 max-[760px]:w-full"
-          src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=85"
-          alt={pageContent.tours.heroAlt}
+        <PlaceholderImage
+          className="h-[180px] w-[52%] rounded-lg max-[760px]:h-52 max-[760px]:w-full"
+          label="Tour hero photo placeholder — choose a Philippine destination photo"
         />
       </section>
       <div className="px-[clamp(32px,6vw,90px)] py-4">
         <TourSearch />
         <div className="mt-4 flex flex-wrap gap-2">
-          {pageContent.tours.categories.map((category, index) => (
+          {pageContent.tours.categories.map((category) => (
             <button
-              className={`rounded-full border px-4 py-1.5 text-xs ${index === 0 ? "border-[#235a5b] bg-[#235a5b] text-white" : "border-[#e1e4df] bg-transparent text-[#526866]"}`}
+              className={`rounded-full border px-4 py-1.5 text-xs ${category === selectedCategory ? "border-[#235a5b] bg-[#235a5b] text-white" : "border-[#e1e4df] bg-transparent text-[#526866]"}`}
               type="button"
               key={category}
+              onClick={() => setSelectedCategory(category)}
             >
               {category}
             </button>
@@ -170,12 +220,19 @@ export default function TourPage() {
               <button
                 className="border-0 bg-transparent text-[10px] text-[#d36d56]"
                 type="button"
+                onClick={resetFilters}
               >
                 {pageContent.tours.reset}
               </button>
             </div>
-            {pageContent.tours.filters.map(([title, options]) => (
-              <FilterGroup title={title} options={options} key={title} />
+            {filterGroups.map(({ title, options }) => (
+              <FilterGroup
+                title={title}
+                options={options}
+                selectedOptions={selectedFilters}
+                onChange={toggleFilter}
+                key={title}
+              />
             ))}
           </aside>
           <section>
@@ -184,8 +241,8 @@ export default function TourPage() {
               <span>{pageContent.tours.sort}</span>
             </div>
             <div className="grid grid-cols-2 gap-4 max-[900px]:grid-cols-1">
-              {tours.map((tour) => (
-                <TourCard key={tour.name} tour={tour} />
+              {visibleTours.map((tour) => (
+                <TourCard key={tour.id} tour={tour} />
               ))}
             </div>
           </section>

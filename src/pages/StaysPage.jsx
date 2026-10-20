@@ -1,4 +1,5 @@
 import {
+  CatalogImage,
   Footer,
   Header,
   LineIcon,
@@ -6,7 +7,7 @@ import {
 } from "../components/WonderFlowShared.jsx";
 import { useMemo, useState } from "react";
 import searchFields from "../data/searchFields.js";
-import { hotels, pageContent, siteContent } from "../data/content.js";
+import { hotels, pageContent } from "../data/content.js";
 
 function StaysSearch() {
   return (
@@ -19,7 +20,7 @@ function StaysSearch() {
           className="min-w-[142px] rounded-[5px] border-0 bg-[#235a5b] px-4 py-3 text-sm font-semibold text-white"
           type="button"
         >
-          {siteContent.search.stayButton} <LineIcon name="search" />
+          Find your stay <LineIcon name="search" />
         </button>
       </div>
     </section>
@@ -52,16 +53,15 @@ function FilterGroup({ title, options, selectedOptions, onChange }) {
 
 function StayCard({ stay }) {
   const openDetails = () => {
-    window.history.pushState({}, "", "/stays/hotel-fina");
+    window.history.pushState({}, "", `/stays/${stay.id}`);
     window.dispatchEvent(new PopStateEvent("popstate"));
   };
 
   return (
     <article className="stay-card grid grid-cols-[220px_1fr] overflow-hidden rounded-lg border border-[#dfe4df] bg-white max-[760px]:grid-cols-1">
-      <img
+      <CatalogImage
         className="h-full min-h-[198px] w-full object-cover max-[760px]:h-52"
-        src={stay.imageUrl}
-        alt={stay.title}
+        item={stay}
       />
       <div className="flex min-w-0 flex-col p-4">
         <div className="flex items-start justify-between gap-3">
@@ -83,7 +83,7 @@ function StayCard({ stay }) {
           <strong className="rounded bg-[#e8f0eb] px-2 py-1 text-[#397071]">
             {stay.rating}
           </strong>{" "}
-          <b>{pageContent.stays.ratingLabel}</b> ({stay.reviewCount} reviews)
+          <b>Excellent</b> ({stay.reviewCount} reviews)
         </p>
         <p className="m-0 text-xs leading-5 text-[#71807d]">
           {stay.description}
@@ -96,7 +96,7 @@ function StayCard({ stay }) {
             <strong className="text-lg">
               {stay.getFormattedPrice().replace("/night", "")}
               <span className="text-[10px] font-normal">
-                {siteContent.search.nightUnit}
+                / night
               </span>
             </strong>
             <button
@@ -104,7 +104,7 @@ function StayCard({ stay }) {
               type="button"
               onClick={openDetails}
             >
-              {pageContent.stays.viewRooms}
+              View rooms
             </button>
           </div>
         </div>
@@ -114,10 +114,29 @@ function StayCard({ stay }) {
 }
 
 export default function StaysPage() {
-  const filterGroups = Object.values(pageContent.stays.filters);
-  const filterOptions = filterGroups.flatMap(({ options }) =>
-    options.map(([label, count, checked]) => ({ label, count, checked })),
-  );
+  const amenities = [...new Set(hotels.flatMap((hotel) => hotel.amenities))];
+  const filterGroups = [
+    {
+      title: "The little extras",
+      options: amenities.map((label) => ({
+        label,
+        count: hotels.filter((hotel) => hotel.amenities.includes(label)).length,
+      })),
+    },
+    {
+      title: "Guest rating",
+      options: [
+        { label: "Exceptional · 9+", count: hotels.filter((hotel) => hotel.rating >= 9).length },
+        { label: "Very good · 8+", count: hotels.filter((hotel) => hotel.rating >= 8).length },
+      ],
+    },
+  ];
+  const filterOptions = filterGroups.flatMap(({ options }) => options);
+  const matchesFilter = (hotel, filter) => {
+    if (filter.startsWith("Exceptional")) return hotel.rating >= 9;
+    if (filter.startsWith("Very good")) return hotel.rating >= 8;
+    return hotel.amenities.includes(filter);
+  };
   const [selectedFilters, setSelectedFilters] = useState(
     filterOptions.filter(({ checked }) => checked).map(({ label }) => label),
   );
@@ -133,9 +152,7 @@ export default function StaysPage() {
 
     return hotels.filter((hotel) =>
       selectedFilters.some((filter) => {
-        if (filter.startsWith("Exceptional")) return hotel.rating >= 9;
-        if (filter.startsWith("Very good")) return hotel.rating >= 8;
-        return hotel.amenities.includes(filter);
+        return matchesFilter(hotel, filter);
       }),
     );
   }, [selectedFilters]);
@@ -171,11 +188,7 @@ export default function StaysPage() {
               title={title}
               selectedOptions={selectedFilters}
               onChange={toggleFilter}
-              options={options.map(([label, count, checked]) => ({
-                label,
-                count,
-                checked,
-              }))}
+              options={options}
             />
           ))}
         </aside>
@@ -199,7 +212,13 @@ export default function StaysPage() {
           <div className="grid gap-4">
             {visibleHotels.length > 0 ? (
               visibleHotels.map((stay) => (
-                <StayCard key={stay.id} stay={stay} />
+              <div
+                className="group rounded-lg transition-shadow duration-200 hover:shadow-[0_0_0_3px_rgba(211,109,86,.65),0_12px_24px_rgba(31,65,60,.12)]"
+                key={stay.id}
+                title={selectedFilters.length ? "Matches your selected filters" : undefined}
+              >
+                <StayCard stay={stay} />
+              </div>
               ))
             ) : (
               <p className="text-sm text-[#71807d]">
