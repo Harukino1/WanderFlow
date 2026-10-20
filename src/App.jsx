@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import LandingPage from './pages/LandingPage.jsx'
 import StaysPage from './pages/StaysPage.jsx'
+import HotelDetailPage from './pages/HotelDetailPage.jsx'
 
 function App() {
   const [pathname, setPathname] = useState(window.location.pathname)
@@ -11,7 +12,7 @@ function App() {
     return () => window.removeEventListener('popstate', handleNavigation)
   }, [])
 
-  const Page = pathname === '/stays' ? StaysPage : LandingPage
+  const Page = pathname === '/stays/hotel-fina' ? HotelDetailPage : pathname === '/stays' ? StaysPage : LandingPage
 
   return <div className="page-transition" key={pathname}><Page /></div>
 }

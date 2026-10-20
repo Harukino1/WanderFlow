@@ -15,9 +15,14 @@ function FilterGroup({ title, options }) {
 }
 
 function StayCard({ stay }) {
+  const openDetails = () => {
+    window.history.pushState({}, '', '/stays/hotel-fina')
+    window.dispatchEvent(new PopStateEvent('popstate'))
+  }
+
   return <article className="stay-card grid grid-cols-[220px_1fr] overflow-hidden rounded-lg border border-[#dfe4df] bg-white max-[760px]:grid-cols-1">
     <img className="h-full min-h-[198px] w-full object-cover max-[760px]:h-52" src={stay.image} alt="" />
-    <div className="flex min-w-0 flex-col p-4"><div className="flex items-start justify-between gap-3"><div><p className="mb-1 text-[10px] text-[#8a9691]">{stay.location}</p><h2 className="m-0 font-['Lora',Georgia,serif] text-2xl font-medium">{stay.name}</h2></div><button className="border-0 bg-transparent p-1 text-[#245556]" type="button" aria-label={`Save ${stay.name}`}><LineIcon name="heart" /></button></div><p className="my-2 text-xs text-[#526866]"><strong className="rounded bg-[#e8f0eb] px-2 py-1 text-[#397071]">{stay.rating}</strong> <b>Excellent</b> ({stay.reviews})</p><p className="m-0 text-xs leading-5 text-[#71807d]">{stay.description}</p><div className="mt-auto flex items-end justify-between border-t border-[#e3e6e1] pt-3"><span className="text-[10px] text-[#71807d]">✓ Free cancellation<br />No prepayment required</span><div className="flex items-center gap-4"><strong className="text-lg">{stay.price}<span className="text-[10px] font-normal"> / night</span></strong><button className="rounded bg-[#235a5b] px-4 py-2 text-xs font-semibold text-white" type="button">View rooms</button></div></div></div>
+    <div className="flex min-w-0 flex-col p-4"><div className="flex items-start justify-between gap-3"><div><p className="mb-1 text-[10px] text-[#8a9691]">{stay.location}</p><h2 className="m-0 font-['Lora',Georgia,serif] text-2xl font-medium">{stay.name}</h2></div><button className="border-0 bg-transparent p-1 text-[#245556]" type="button" aria-label={`Save ${stay.name}`}><LineIcon name="heart" /></button></div><p className="my-2 text-xs text-[#526866]"><strong className="rounded bg-[#e8f0eb] px-2 py-1 text-[#397071]">{stay.rating}</strong> <b>Excellent</b> ({stay.reviews})</p><p className="m-0 text-xs leading-5 text-[#71807d]">{stay.description}</p><div className="mt-auto flex items-end justify-between border-t border-[#e3e6e1] pt-3"><span className="text-[10px] text-[#71807d]">✓ Free cancellation<br />No prepayment required</span><div className="flex items-center gap-4"><strong className="text-lg">{stay.price}<span className="text-[10px] font-normal"> / night</span></strong><button className="rounded bg-[#235a5b] px-4 py-2 text-xs font-semibold text-white" type="button" onClick={openDetails}>View rooms</button></div></div></div>
   </article>
 }
 
