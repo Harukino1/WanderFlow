@@ -40,9 +40,13 @@ body,
     z-index: 2;
   }
 
+  .hero-caption {
+    bottom: clamp(150px, 20vh, 210px);
+  }
+
   .feature-highlights {
     position: absolute;
-    bottom: clamp(20px, 3vh, 32px);
+    bottom: 72px;
     left: 0;
     right: 0;
     padding: 0 clamp(40px, 5vw, 90px);
@@ -55,6 +59,13 @@ body,
 
   .feature-highlights > div:last-child {
     text-align: right;
+  }
+
+  .site-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 }
 
@@ -77,6 +88,10 @@ body,
     padding-bottom: 10px;
   }
 
+  .hero-caption {
+    bottom: 142px;
+  }
+
   .trip-search > div:first-child {
     height: 18px;
   }
@@ -86,7 +101,7 @@ body,
   }
 
   .feature-highlights {
-    bottom: 16px;
+    bottom: 64px;
     padding-inline: 32px;
   }
 
@@ -96,8 +111,104 @@ body,
 }
 
 @media (max-width: 760px) {
+  .app-shell {
+    overflow: hidden;
+  }
+
   .app-hero {
     height: calc(100dvh - 68px);
     min-height: calc(100dvh - 68px);
+  }
+
+  .hero-caption {
+    bottom: calc(100% - 362px);
+  }
+
+  .site-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-block: 14px;
+  }
+
+  .feature-highlights {
+    position: absolute;
+    bottom: 58px;
+    left: 0;
+    right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.line-icon {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+}
+
+button .line-icon {
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  margin-left: 12px;
+  vertical-align: middle;
+}
+
+@media (min-width: 761px) {
+  .app-shell {
+    background: #fff;
+  }
+
+  .app-hero {
+    height: clamp(400px, 64vh, 680px);
+  }
+
+  .app-hero > div {
+    padding-top: clamp(35px, 7vh, 90px);
+  }
+
+  .hero-caption {
+    bottom: 150px;
+    background: transparent;
+    padding: 0;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, .55);
+  }
+
+  .trip-search {
+    top: calc(clamp(59px, 8vh, 80px) + clamp(400px, 64vh, 680px) - 78px);
+    min-height: 136px;
+    padding: 27px;
+  }
+
+  .trip-search > div:first-child {
+    height: 30px;
+    gap: 42px;
+  }
+
+  .trip-search > div:last-child {
+    gap: 34px;
+  }
+
+  .trip-search .line-icon {
+    margin-right: 16px;
+    color: #235a5b;
+  }
+
+  .feature-highlights {
+    top: calc(clamp(59px, 8vh, 80px) + clamp(400px, 64vh, 680px) + 105px);
+    bottom: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .trip-search .line-icon {
+    margin-right: 10px;
+    color: #235a5b;
+  }
+
+  .feature-highlights {
+    gap: 16px;
   }
 }

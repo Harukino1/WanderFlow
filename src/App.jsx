@@ -6,17 +6,32 @@ const navigationLinks = [
 ]
 
 const searchFields = [
-  { label: 'DESTINATION', value: 'Biri Island, Northern Samar' },
-  { label: 'CHECK-IN / CHECK-OUT', value: '17 Oct – 20 Oct 2026' },
-  { label: 'GUESTS & ROOMS', value: '2 adults · 1 room' },
+  { icon: 'location', label: 'DESTINATION', value: 'Biri Island, Northern Samar' },
+  { icon: 'calendar', label: 'CHECK-IN / CHECK-OUT', value: '17 Oct – 20 Oct 2026' },
+  { icon: 'people', label: 'GUESTS & ROOMS', value: '2 adults · 1 room' },
 ]
 
 const featureHighlights = [
-  'Handpicked, never endless',
-  'Book with peace of mind',
-  'Every detail, one itinerary',
-  'Local people. Lasting memories.',
+  { icon: 'sparkle', text: 'Handpicked, never endless' },
+  { icon: 'shield', text: 'Book with peace of mind' },
+  { icon: 'map', text: 'Every detail, one itinerary' },
+  { icon: 'heart', text: 'Local people. Lasting memories.' },
 ]
+
+function LineIcon({ name }) {
+  const paths = {
+    calendar: <><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M16 3v4M8 3v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" /></>,
+    heart: <path d="M20.8 8.8c0 5.2-8.8 10-8.8 10s-8.8-4.8-8.8-10A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z" />,
+    location: <><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="2.5" /></>,
+    map: <><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Z" /><path d="M9 3v15M15 6v15" /></>,
+    people: <><circle cx="9" cy="8" r="3" /><path d="M3 20a6 6 0 0 1 12 0M16 11a3 3 0 1 0 0-6M17 14a5 5 0 0 1 4 5" /></>,
+    search: <><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></>,
+    shield: <path d="M12 3 20 6v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6l8-3Zm-3 9 2 2 4-4" />,
+    sparkle: <><path d="m12 2 1.7 6.3L20 10l-6.3 1.7L12 18l-1.7-6.3L4 10l6.3-1.7L12 2ZM19 17l.7 2.3L22 20l-2.3.7L19 23l-.7-2.3L16 20l2.3-.7L19 17Z" /></>,
+  }
+
+  return <svg className="line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>
+}
 
 function Header() {
   return (
@@ -80,16 +95,17 @@ function Hero() {
           A whole journey, brought together by you.
         </p>
       </div>
-      <p className="absolute bottom-[74px] right-[46px] m-0 text-xs text-white/85 max-[760px]:bottom-[126px] max-[760px]:right-[25px]">
+      <p className="hero-caption absolute right-[46px] m-0 rounded-full bg-[rgba(9,37,38,.48)] px-3 py-1.5 text-xs font-medium text-white max-[760px]:right-[25px]">
         A tropical escape along Albay Bay, Mayon
       </p>
     </section>
   )
 }
 
-function SearchField({ label, value }) {
+function SearchField({ icon, label, value }) {
   return (
     <div className="flex min-w-0 flex-1 items-center max-[760px]:col-span-2">
+      <LineIcon name={icon} />
       <div>
         <span className="mb-[3px] block whitespace-nowrap text-[10px] font-semibold text-[#a4adab]">{label}</span>
         <span className="block whitespace-nowrap text-sm text-[#526866]">{value}</span>
@@ -112,7 +128,7 @@ function SearchPanel() {
       <div className="flex items-center gap-[25px] max-[760px]:grid max-[760px]:grid-cols-2 max-[760px]:gap-x-2 max-[760px]:gap-y-[14px]">
         {searchFields.map((field) => <SearchField {...field} key={field.label} />)}
         <button className="min-w-[123px] cursor-pointer rounded-[5px] border-0 bg-[#235a5b] px-[13px] py-[11px] text-sm font-semibold text-white max-[760px]:col-span-2 max-[760px]:w-full" type="button">
-          Find your stay
+          Find your stay <LineIcon name="search" />
         </button>
       </div>
     </section>
@@ -122,8 +138,21 @@ function SearchPanel() {
 function FeatureHighlights() {
   return (
     <section className="feature-highlights flex justify-between px-[68px] pt-[73px] max-[760px]:grid max-[760px]:grid-cols-2 max-[760px]:gap-x-3 max-[760px]:gap-y-[22px] max-[760px]:px-[25px] max-[760px]:pb-[30px] max-[760px]:pt-20">
-      {featureHighlights.map((text) => <div className="text-sm text-[#596f6d]" key={text}>{text}</div>)}
+      {featureHighlights.map(({ icon, text }) => <div className="flex items-center gap-3 text-sm text-[#244f50]" key={text}><LineIcon name={icon} />{text}</div>)}
     </section>
+  )
+}
+
+function Footer() {
+  return (
+    <footer className="site-footer flex items-center justify-between border-t border-[#d7e1dc] bg-[#edf3ef] px-[clamp(32px,5vw,90px)] py-5 text-xs text-[#58716b] max-[760px]:grid max-[760px]:gap-3 max-[760px]:px-[25px]">
+      <p className="m-0">© 2026 WonderFlow. Travel with intention.</p>
+      <nav className="flex gap-6 max-[760px]:gap-4" aria-label="Footer navigation">
+        <a className="text-inherit no-underline hover:text-[#245556]" href="#about">About</a>
+        <a className="text-inherit no-underline hover:text-[#245556]" href="#contact">Contact</a>
+        <a className="text-inherit no-underline hover:text-[#245556]" href="#privacy">Privacy</a>
+      </nav>
+    </footer>
   )
 }
 
@@ -134,6 +163,7 @@ function App() {
       <Hero />
       <SearchPanel />
       <FeatureHighlights />
+      <Footer />
     </main>
   )
 }
