@@ -126,37 +126,7 @@ export function Footer() {
   return (
     <footer className="flex items-center justify-between border-t border-[#d7e1dc] bg-[#edf3ef] px-[clamp(25px,5vw,90px)] py-5 text-xs text-[#58716b] max-[760px]:grid max-[760px]:gap-3">
       <p className="m-0">{pageContent.footer.copyright}</p>
-      <nav
-        className="flex gap-6 max-[760px]:gap-4"
-        aria-label={pageContent.footer.links[0][0]}
-      >
-        {pageContent.footer.links.map(([label, href]) => (
-          <a
-            className="text-inherit no-underline hover:text-[#245556]"
-            href={href}
-            key={label}
-          >
-            {label}
-          </a>
-        ))}
-      </nav>
     </footer>
-  );
-}
-
-export function SearchField({ icon, label, value }) {
-  return (
-    <div className="flex min-w-0 flex-1 items-center max-[760px]:col-span-2">
-      <LineIcon name={icon} />
-      <div>
-        <span className="mb-[3px] block whitespace-nowrap text-[10px] font-semibold text-[#a4adab]">
-          {label}
-        </span>
-        <span className="block whitespace-nowrap text-sm text-[#526866]">
-          {value}
-        </span>
-      </div>
-    </div>
   );
 }
 

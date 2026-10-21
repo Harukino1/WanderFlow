@@ -2,30 +2,9 @@ import {
   CatalogImage,
   Footer,
   Header,
-  LineIcon,
-  SearchField,
 } from "../components/WonderFlowShared.jsx";
 import { useMemo, useState } from "react";
-import searchFields from "../data/searchFields.js";
 import { hotels, pageContent } from "../data/content.js";
-
-function StaysSearch() {
-  return (
-    <section className="stays-search rounded-lg border border-[#e1e4df] bg-white px-5 py-4 shadow-[0_8px_18px_rgba(31,65,60,.08)]">
-      <div className="flex items-center gap-8 max-[760px]:grid max-[760px]:gap-4">
-        {searchFields.map((field) => (
-          <SearchField {...field} key={field.label} />
-        ))}
-        <button
-          className="min-w-[142px] rounded-[5px] border-0 bg-[#235a5b] px-4 py-3 text-sm font-semibold text-white"
-          type="button"
-        >
-          {pageContent.common.staySearchAction} <LineIcon name="search" />
-        </button>
-      </div>
-    </section>
-  );
-}
 
 function FilterGroup({ title, options, selectedOptions, onChange }) {
   return (
@@ -155,9 +134,6 @@ export default function StaysPage() {
   return (
     <main className="stays-page bg-[#faf9f4] font-['Inter',Arial,sans-serif] text-[#244f50]">
       <Header activePage="stays" />
-      <div className="stays-search-wrap bg-[#f0ede4] px-[clamp(32px,6vw,90px)] py-6">
-        <StaysSearch />
-      </div>
       <div className="stays-content mx-auto grid max-w-[1320px] grid-cols-[280px_minmax(0,1fr)] gap-7 px-[clamp(32px,6vw,90px)] py-10 max-[760px]:grid-cols-1">
         <aside>
           <p className="mb-2 text-[10px] font-semibold uppercase tracking-wide text-[#d36d56]">

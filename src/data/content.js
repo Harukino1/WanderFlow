@@ -167,8 +167,6 @@ export const pageContent = {
     priceSeparator: " × ",
     perNight: "/ night",
     standardRoom: "Standard room",
-    staySearchAction: "Find your stay",
-    tourSearchAction: "Find tours",
     viewRooms: "View rooms",
   },
   reviewSection: {
@@ -217,12 +215,7 @@ export const pageContent = {
     { label: "Tours", href: "/tours" },
   ],
   footer: {
-    copyright: "© 2026 WonderFlow. Travel with intention.",
-    links: [
-      ["About", "#about"],
-      ["Contact", "#contact"],
-      ["Privacy", "#privacy"],
-    ],
+    copyright: "© 2026 WonderFlow. Ever got lost? Just turn your clothes around or use WonderFlow.",
   },
   landing: {
     eyebrow: "LESS ORDINARY. MORE YOU.",
@@ -232,9 +225,6 @@ export const pageContent = {
     heroImage:
       "Hero photo placeholder — choose an Albay or Philippine landscape",
     heroCaption: "A tropical escape along Albay Bay, Mayon",
-    searchLabel: "Search for a trip",
-    searchTabs: ["Stays", "Tours & experiences", "Build a trip"],
-    searchAction: "Find your stay",
     features: [
       ["sparkle", "Handpicked, never endless"],
       ["shield", "Book with peace of mind"],
@@ -254,7 +244,6 @@ export const pageContent = {
     viewRooms: "View rooms",
     removeFilter: "Remove {filter} filter",
     matchTitle: "Matches your selected filters",
-    searchAction: "Find your stay",
   },
   hotel: {
     review: {
@@ -336,20 +325,9 @@ export const pageContent = {
     filterTitle: "Find your kind of day",
     reset: "Reset",
     results: "Experiences",
-    searchAction: "Find tours",
     categoryAll: "All experiences",
-    searchFields: [
-      { icon: "location", label: "DESTINATION", value: "Mayon, Albay" },
-      { icon: "calendar", label: "WHEN", value: "14–16 Jun 2027" },
-      { icon: "people", label: "TRAVELERS", value: "2 adults" },
-    ],
   },
   tour: {
-    searchFields: [
-      { icon: "location", label: "DESTINATION", value: "Mayon, Albay" },
-      { icon: "calendar", label: "WHEN", value: "14–16 Jun 2027" },
-      { icon: "people", label: "TRAVELERS", value: "2 adults" },
-    ],
     gallery: [
       {
         url: "",

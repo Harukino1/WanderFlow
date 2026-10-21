@@ -2,59 +2,10 @@ import {
   CatalogImage,
   Footer,
   Header,
-  LineIcon,
   PlaceholderImage,
 } from "../components/WonderFlowShared.jsx";
 import { useMemo, useState } from "react";
 import { pageContent, tours } from "../data/content.js";
-
-function TourSearch() {
-  const { searchFields } = pageContent.tours;
-
-  return (
-    <section className="tour-search mx-auto flex max-w-[1280px] items-center gap-8 rounded-lg border border-[#e1e4df] bg-white px-5 py-3 shadow-[0_8px_18px_rgba(31,65,60,.08)] max-[760px]:grid max-[760px]:grid-cols-2 max-[760px]:gap-4">
-      <div className="flex min-w-0 flex-1 items-center gap-3">
-        <LineIcon name="location" />
-        <div>
-          <span className="block text-[10px] font-semibold text-[#a4adab]">
-            {searchFields[0].label}
-          </span>
-          <span className="text-sm text-[#526866]">
-            {searchFields[0].value}
-          </span>
-        </div>
-      </div>
-      <div className="flex min-w-0 flex-1 items-center gap-3">
-        <LineIcon name="calendar" />
-        <div>
-          <span className="block text-[10px] font-semibold text-[#a4adab]">
-            {searchFields[1].label}
-          </span>
-          <span className="text-sm text-[#526866]">
-            {searchFields[1].value}
-          </span>
-        </div>
-      </div>
-      <div className="flex min-w-0 flex-1 items-center gap-3">
-        <LineIcon name="people" />
-        <div>
-          <span className="block text-[10px] font-semibold text-[#a4adab]">
-            {searchFields[2].label}
-          </span>
-          <span className="text-sm text-[#526866]">
-            {searchFields[2].value}
-          </span>
-        </div>
-      </div>
-      <button
-        className="rounded-[5px] border-0 bg-[#235a5b] px-4 py-3 text-sm font-semibold text-white max-[760px]:col-span-2"
-        type="button"
-      >
-        {pageContent.tours.searchAction} <LineIcon name="search" />
-      </button>
-    </section>
-  );
-}
 
 function TourCard({ tour }) {
   const openDetails = () => {
@@ -193,7 +144,6 @@ export default function TourPage() {
         />
       </section>
       <div className="px-[clamp(32px,6vw,90px)] py-4">
-        <TourSearch />
         <div className="mt-4 flex flex-wrap gap-2">
           {pageContent.tours.categories.map((category) => (
             <button

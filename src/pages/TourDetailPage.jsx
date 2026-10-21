@@ -6,29 +6,8 @@ import {
   LineIcon,
   PlaceholderImage,
   ReviewSection,
-  SearchField,
 } from "../components/WonderFlowShared.jsx";
 import { pageContent, tours } from "../data/content.js";
-
-function TourSearch() {
-  const { searchFields } = pageContent.tour;
-
-  return (
-    <div className="tour-detail-search bg-[#f0ede4] px-[clamp(32px,6vw,90px)] py-3">
-      <div className="mx-auto flex max-w-[1280px] items-center gap-7 rounded-lg border border-[#e1e4df] bg-white px-4 py-3 shadow-[0_8px_18px_rgba(31,65,60,.08)] max-[760px]:grid max-[760px]:grid-cols-2">
-        {searchFields.map((field) => (
-          <SearchField {...field} key={field.label} />
-        ))}
-        <button
-          className="rounded-[5px] border-0 bg-[#235a5b] px-4 py-3 text-xs font-semibold text-white max-[760px]:col-span-2"
-          type="button"
-        >
-          {pageContent.common.tourSearchAction} <LineIcon name="search" />
-        </button>
-      </div>
-    </div>
-  );
-}
 
 function TourReviewModal({
   tour,
@@ -280,7 +259,6 @@ export default function TourDetailPage() {
   return (
     <main className="tour-detail-page bg-[#faf9f4] font-['Inter',Arial,sans-serif] text-[#244f50]">
       <Header activePage="tours" />
-      <TourSearch />
       <div className="mx-auto max-w-[1280px] px-[clamp(32px,6vw,90px)] py-6">
         <div className="flex items-end justify-between gap-5 max-[760px]:block">
           <div>
