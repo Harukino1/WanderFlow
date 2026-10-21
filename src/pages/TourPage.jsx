@@ -50,7 +50,7 @@ function TourSearch() {
         className="rounded-[5px] border-0 bg-[#235a5b] px-4 py-3 text-sm font-semibold text-white max-[760px]:col-span-2"
         type="button"
       >
-        Find tours <LineIcon name="search" />
+        {pageContent.tours.searchAction} <LineIcon name="search" />
       </button>
     </section>
   );
@@ -87,7 +87,7 @@ function TourCard({ tour }) {
           {tour.title}
         </h2>
         <p className="m-0 min-h-[42px] text-xs leading-5 text-[#71807d]">
-          {tour.description} Guide, equipment, and entrance fees included.
+          {tour.description}
         </p>
         <div className="mt-3 flex items-center justify-between border-t border-[#e3e6e1] pt-3">
           <strong className="text-lg">
@@ -131,7 +131,9 @@ function FilterGroup({ title, options, selectedOptions, onChange }) {
 }
 
 export default function TourPage() {
-  const [selectedCategory, setSelectedCategory] = useState("All experiences");
+  const [selectedCategory, setSelectedCategory] = useState(
+    pageContent.tours.categoryAll,
+  );
   const [selectedFilters, setSelectedFilters] = useState([]);
   const toggleFilter = (filter) =>
     setSelectedFilters((current) =>
@@ -153,7 +155,7 @@ export default function TourPage() {
     () =>
       tours.filter((tour) => {
         const categoryMatch =
-          selectedCategory === "All experiences" ||
+          selectedCategory === pageContent.tours.categoryAll ||
           tour.category === selectedCategory;
         const filtersMatch = selectedFilters.every(
           (filter) =>
@@ -166,7 +168,7 @@ export default function TourPage() {
     [selectedCategory, selectedFilters],
   );
   const resetFilters = () => {
-    setSelectedCategory("All experiences");
+    setSelectedCategory(pageContent.tours.categoryAll);
     setSelectedFilters([]);
   };
 

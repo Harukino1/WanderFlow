@@ -26,7 +26,7 @@ function App() {
             : LandingPage;
 
   return (
-    <div className="page-transition" key={pathname}>
+    <div className="animate-[page-enter_280ms_ease-out_both]" key={pathname}>
       <Page />
     </div>
   );

@@ -135,6 +135,113 @@ export const tours = [
 ];
 
 export const pageContent = {
+  brand: "WonderFlow",
+  header: {
+    primaryNavigation: "Primary navigation",
+    currency: "EN / PHP",
+    bookNow: "Book Now",
+    menu: "Menu",
+  },
+  confirmation: {
+    eyebrow: "Purchase confirmed",
+    title: "You’re all set!",
+    close: "Close purchase confirmation",
+    messagePrefix: "Your",
+    messageFor: "purchase for",
+    messageSuffix: "has been confirmed.",
+    bookingMessagePrefix: "Your booking for",
+    bookingMessageSuffix: "has been confirmed.",
+    totalPaid: "Total paid",
+    done: "Done",
+  },
+  common: {
+    night: "night",
+    nights: "nights",
+    adults: "adults",
+    travelers: "travelers",
+    reviews: "reviews",
+    english: "English",
+    tagalog: "Tagalog",
+    total: "Total",
+    done: "Done",
+    priceSeparator: " × ",
+    perNight: "/ night",
+    standardRoom: "Standard room",
+    staySearchAction: "Find your stay",
+    tourSearchAction: "Find tours",
+    viewRooms: "View rooms",
+  },
+  reviewSection: {
+    eyebrow: "From fellow travelers",
+    title: "Reviews and comments",
+    countLabel: "reviews",
+    empty: "Be the first to share your experience.",
+    formTitle: "Leave a comment",
+    nameLabel: "Your name",
+    commentLabel: "Your comment",
+    submit: "Post comment",
+  },
+  reviews: {
+    hotels: {
+      "the-lind-boracay": {
+        items: [],
+      },
+      "hotel-fina": {
+        items: [],
+      },
+      "hotel-cielo-palawan": {
+        items: [],
+      },
+      "crimson-resort-mactan": {
+        items: [],
+      },
+    },
+    tours: {
+      "mayon-black-lava-atv-trail": {
+        items: [],
+      },
+      "bicol-culinary-masterclass": {
+        items: [],
+      },
+      "coron-island-hopping": {
+        items: [],
+      },
+      "vigan-heritage-walk": {
+        items: [],
+      },
+    },
+  },
+  navigation: [
+    { label: "Explore", href: "/" },
+    { label: "Stays", href: "/stays" },
+    { label: "Tours", href: "/tours" },
+  ],
+  footer: {
+    copyright: "© 2026 WonderFlow. Travel with intention.",
+    links: [
+      ["About", "#about"],
+      ["Contact", "#contact"],
+      ["Privacy", "#privacy"],
+    ],
+  },
+  landing: {
+    eyebrow: "LESS ORDINARY. MORE YOU.",
+    title: "A whole journey,\n brought together by\n you.",
+    description:
+      "Beautiful places to stay. Local stories to step into.\nA whole journey, brought together by you.",
+    heroImage:
+      "Hero photo placeholder — choose an Albay or Philippine landscape",
+    heroCaption: "A tropical escape along Albay Bay, Mayon",
+    searchLabel: "Search for a trip",
+    searchTabs: ["Stays", "Tours & experiences", "Build a trip"],
+    searchAction: "Find your stay",
+    features: [
+      ["sparkle", "Handpicked, never endless"],
+      ["shield", "Book with peace of mind"],
+      ["map", "Every detail, one itinerary"],
+      ["heart", "Local people. Lasting memories."],
+    ],
+  },
   stays: {
     eyebrow: "Your hideaway awaits",
     title: "Find the best place to stay.",
@@ -142,8 +249,36 @@ export const pageContent = {
     reset: "Reset all",
     noResults: "No stays match the selected filters.",
     cancellation: "✓ Free cancellation\nNo prepayment required",
+    ratingLabel: "Excellent",
+    reviewsLabel: "reviews",
+    viewRooms: "View rooms",
+    removeFilter: "Remove {filter} filter",
+    matchTitle: "Matches your selected filters",
+    searchAction: "Find your stay",
   },
   hotel: {
+    review: {
+      eyebrow: "Review your stay",
+      close: "Close review",
+      selection: "Your selection",
+      stay: "Stay",
+      guests: "Guests",
+      rooms: "Rooms",
+      night: "night",
+      nights: "nights",
+      adult: "adult",
+      adults: "adults",
+      room: "room",
+      roomsLower: "rooms",
+      decreaseAdults: "Decrease adults",
+      increaseAdults: "Increase adults",
+      decreaseRooms: "Decrease rooms",
+      increaseRooms: "Increase rooms",
+      confirm: "Confirm purchase",
+      confirmedEyebrow: "Booking confirmed",
+      confirmedTitle: "Your stay is confirmed!",
+      confirmedMessagePrefix: "Your booking at",
+    },
     gallery: [
       {
         url: "",
@@ -201,6 +336,8 @@ export const pageContent = {
     filterTitle: "Find your kind of day",
     reset: "Reset",
     results: "Experiences",
+    searchAction: "Find tours",
+    categoryAll: "All experiences",
     searchFields: [
       { icon: "location", label: "DESTINATION", value: "Mayon, Albay" },
       { icon: "calendar", label: "WHEN", value: "14–16 Jun 2027" },
@@ -337,5 +474,17 @@ export const pageContent = {
       benefits: ["✓  Free cancellation until 7 June", "✓  Maximum 8 travelers"],
     },
     detailDuration: "3–4 hours · 1–8 travelers · English · Tagalog",
+    review: {
+      eyebrow: "Review your purchase",
+      close: "Close review",
+      selection: "Your selection",
+      departure: "Departure",
+      travelers: "Travelers",
+      adults: "adults",
+      confirm: "Confirm purchase",
+      decreaseTravelers: "Decrease travelers",
+      increaseTravelers: "Increase travelers",
+      travelersLower: "travelers",
+    },
   },
 };

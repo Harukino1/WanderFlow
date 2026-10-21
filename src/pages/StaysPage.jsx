@@ -20,7 +20,7 @@ function StaysSearch() {
           className="min-w-[142px] rounded-[5px] border-0 bg-[#235a5b] px-4 py-3 text-sm font-semibold text-white"
           type="button"
         >
-          Find your stay <LineIcon name="search" />
+          {pageContent.common.staySearchAction} <LineIcon name="search" />
         </button>
       </div>
     </section>
@@ -76,7 +76,8 @@ function StayCard({ stay }) {
           <strong className="rounded bg-[#e8f0eb] px-2 py-1 text-[#397071]">
             {stay.rating}
           </strong>{" "}
-          <b>Excellent</b> ({stay.reviewCount} reviews)
+          <b>{pageContent.stays.ratingLabel}</b> ({stay.reviewCount}{" "}
+          {pageContent.stays.reviewsLabel})
         </p>
         <p className="m-0 text-xs leading-5 text-[#71807d]">
           {stay.description}
@@ -89,7 +90,7 @@ function StayCard({ stay }) {
             <strong className="text-lg">
               {stay.getFormattedPrice().replace("/night", "")}
               <span className="text-[10px] font-normal">
-                / night
+                {pageContent.common.perNight}
               </span>
             </strong>
             <button
@@ -97,7 +98,7 @@ function StayCard({ stay }) {
               type="button"
               onClick={openDetails}
             >
-              View rooms
+              {pageContent.common.viewRooms}
             </button>
           </div>
         </div>
@@ -194,7 +195,7 @@ export default function StaysPage() {
                   key={filter}
                   type="button"
                   onClick={() => toggleFilter(filter)}
-                  aria-label={`Remove ${filter} filter`}
+                  aria-label={pageContent.stays.removeFilter.replace("{filter}", filter)}
                 >
                   {filter} ×
                 </button>
@@ -207,7 +208,7 @@ export default function StaysPage() {
               <div
                 className="group rounded-lg transition-shadow duration-200 hover:shadow-[0_0_0_3px_rgba(211,109,86,.65),0_12px_24px_rgba(31,65,60,.12)]"
                 key={stay.id}
-                title={selectedFilters.length ? "Matches your selected filters" : undefined}
+                title={selectedFilters.length ? pageContent.stays.matchTitle : undefined}
               >
                 <StayCard stay={stay} />
               </div>

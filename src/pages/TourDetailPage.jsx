@@ -1,8 +1,11 @@
+import { useState } from "react";
+
 import {
   Footer,
   Header,
   LineIcon,
   PlaceholderImage,
+  ReviewSection,
   SearchField,
 } from "../components/WonderFlowShared.jsx";
 import { pageContent, tours } from "../data/content.js";
@@ -20,15 +23,134 @@ function TourSearch() {
           className="rounded-[5px] border-0 bg-[#235a5b] px-4 py-3 text-xs font-semibold text-white max-[760px]:col-span-2"
           type="button"
         >
-          Find tours <LineIcon name="search" />
+          {pageContent.common.tourSearchAction} <LineIcon name="search" />
         </button>
       </div>
     </div>
   );
 }
 
+function TourReviewModal({
+  tour,
+  departure,
+  travelers,
+  pricePerTraveler,
+  onClose,
+  onConfirmed,
+}) {
+  const total = pricePerTraveler * travelers;
+  const { review } = pageContent.tour;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#244f50]/60 px-5 py-8">
+      <section
+        className="w-full max-w-lg rounded-xl bg-white p-8 text-[#244f50] shadow-[0_20px_60px_rgba(31,65,60,.2)]"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tour-review-title"
+      >
+        <div className="flex items-start justify-between gap-5">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-[#d36d56]">
+              {review.eyebrow}
+            </p>
+            <h2
+              className="mt-2 font-['Lora',Georgia,serif] text-3xl font-medium"
+              id="tour-review-title"
+            >
+              {tour.title}
+            </h2>
+          </div>
+          <button
+            className="rounded-full border-0 bg-[#e8f0eb] px-3 py-1 text-xl leading-none"
+            type="button"
+            aria-label={review.close}
+            onClick={onClose}
+          >
+            ×
+          </button>
+        </div>
+        <div className="mt-6 rounded-lg border border-[#dce1db] p-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-[#71807d]">
+            {review.selection}
+          </p>
+          <dl className="mt-4 grid gap-3 text-sm">
+            <div className="flex justify-between gap-4">
+              <dt>{review.departure}</dt>
+              <dd className="text-right font-semibold">{departure}</dd>
+            </div>
+            <div className="flex justify-between">
+              <dt>{review.travelers}</dt>
+              <dd className="font-semibold">{travelers} {review.adults}</dd>
+            </div>
+          </dl>
+        </div>
+        <div className="mt-6 flex justify-between border-y border-[#e1e5df] py-4 text-sm">
+          <span>
+            ₱{pricePerTraveler.toLocaleString()} {pageContent.common.priceSeparator} {travelers} {pageContent.common.travelers}
+          </span>
+          <strong>₱{total.toLocaleString()}</strong>
+        </div>
+        <button
+          className="mt-6 w-full rounded bg-[#235a5b] px-5 py-3 text-sm font-semibold text-white"
+          type="button"
+          onClick={() => onConfirmed(total)}
+        >
+          {review.confirm}
+        </button>
+      </section>
+    </div>
+  );
+}
+
+function TourConfirmedModal({ tour, total, onClose }) {
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[#244f50]/60 px-5 py-8">
+      <section
+        className="w-full max-w-md rounded-xl bg-white p-8 text-[#244f50] shadow-[0_20px_60px_rgba(31,65,60,.2)]"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tour-confirmed-title"
+      >
+        <p className="text-xs font-semibold uppercase tracking-wide text-[#d36d56]">
+          {pageContent.confirmation.eyebrow}
+        </p>
+        <h2
+          className="mt-2 font-['Lora',Georgia,serif] text-3xl font-medium"
+          id="tour-confirmed-title"
+        >
+          {pageContent.confirmation.title}
+        </h2>
+        <p className="mt-5 text-sm leading-6 text-[#71807d]">
+          {pageContent.confirmation.bookingMessagePrefix}{" "}
+          <strong className="text-[#244f50]">{tour.title}</strong>{" "}
+          {pageContent.confirmation.bookingMessageSuffix}
+        </p>
+        <div className="mt-6 flex justify-between border-y border-[#e1e5df] py-4 text-sm">
+          <span>{pageContent.confirmation.totalPaid.replace(" paid", "")}</span>
+          <strong>₱{total.toLocaleString()}</strong>
+        </div>
+        <button
+          className="mt-6 w-full rounded bg-[#235a5b] px-5 py-3 text-sm font-semibold text-white"
+          type="button"
+          onClick={onClose}
+        >
+          {pageContent.common.done}
+        </button>
+      </section>
+    </div>
+  );
+}
+
 function BookingPanel({ tour }) {
+  const [selectedDeparture, setSelectedDeparture] = useState(
+    pageContent.tour.booking.departures[0][0],
+  );
+  const [travelers, setTravelers] = useState(2);
+  const [modal, setModal] = useState(null);
   const { booking } = pageContent.tour;
+  const pricePerTraveler = tour.price;
+  const total = pricePerTraveler * travelers;
 
   return (
     <aside className="tour-booking rounded-xl border border-[#dce1db] bg-white p-5 shadow-[0_12px_30px_rgba(31,65,60,.07)]">
@@ -46,25 +168,44 @@ function BookingPanel({ tour }) {
       </p>
       <p className="mt-4 text-xs font-semibold">{booking.departureLabel}</p>
       <div className="mt-3 grid gap-2">
-        {booking.departures.map(([date, places], index) => (
+        {booking.departures.map(([date, places]) => (
           <button
-            className={`rounded border px-3 py-3 text-left text-[10px] ${index === 0 ? "border-[#235a5b] bg-[#e8f0eb]" : "border-[#dce1db] bg-white"}`}
+            className={`rounded border px-3 py-3 text-left text-[10px] ${selectedDeparture === date ? "border-[#235a5b] bg-[#e8f0eb]" : "border-[#dce1db] bg-white"}`}
             type="button"
             key={date}
+            onClick={() => setSelectedDeparture(date)}
           >
             <strong className="block">{date}</strong>
             <span className="text-[#71807d]">{places}</span>
           </button>
         ))}
       </div>
-      <div className="mt-4 flex justify-between text-xs">
-        <span>{booking.travelers}</span>
-        <span>{booking.travelerCount}</span>
+      <div className="mt-4 flex items-center justify-between text-xs">
+        <span>{travelers} {pageContent.common.adults}</span>
+        <div className="flex items-center gap-3">
+          <button
+            className="h-7 w-7 rounded border border-[#dce1db]"
+            type="button"
+            aria-label={pageContent.tour.review.decreaseTravelers}
+            onClick={() => setTravelers(Math.max(1, travelers - 1))}
+          >
+            −
+          </button>
+          <span>{travelers}</span>
+          <button
+            className="h-7 w-7 rounded border border-[#dce1db]"
+            type="button"
+            aria-label={pageContent.tour.review.increaseTravelers}
+            onClick={() => setTravelers(travelers + 1)}
+          >
+            +
+          </button>
+        </div>
       </div>
       <div className="mt-4 grid gap-2 border-t border-[#e1e5df] pt-4 text-xs">
         <div className="flex justify-between">
-          <span>{booking.lineItem}</span>
-          <span>{booking.subtotal}</span>
+          <span>₱{pricePerTraveler.toLocaleString()} {pageContent.common.priceSeparator} {travelers} {pageContent.common.travelers}</span>
+          <span>₱{total.toLocaleString()}</span>
         </div>
         <div className="flex justify-between">
           <span>{booking.taxes}</span>
@@ -72,12 +213,13 @@ function BookingPanel({ tour }) {
         </div>
         <div className="flex justify-between pt-1 text-base font-semibold">
           <span>{booking.total}</span>
-          <span>{booking.subtotal}</span>
+          <span>₱{total.toLocaleString()}</span>
         </div>
       </div>
       <button
         className="mt-4 w-full rounded bg-[#235a5b] px-4 py-3 text-xs font-semibold text-white"
         type="button"
+        onClick={() => setModal("review")}
       >
         {booking.reserve}
       </button>
@@ -89,6 +231,25 @@ function BookingPanel({ tour }) {
           <li key={benefit}>{benefit}</li>
         ))}
       </ul>
+      {modal === "review" && (
+        <TourReviewModal
+          tour={tour}
+          departure={selectedDeparture}
+          travelers={travelers}
+          pricePerTraveler={pricePerTraveler}
+          onClose={() => setModal(null)}
+          onConfirmed={(confirmedTotal) =>
+            setModal({ type: "confirmed", total: confirmedTotal })
+          }
+        />
+      )}
+      {modal?.type === "confirmed" && (
+        <TourConfirmedModal
+          tour={tour}
+          total={modal.total}
+          onClose={() => setModal(null)}
+        />
+      )}
     </aside>
   );
 }
@@ -129,11 +290,11 @@ export default function TourDetailPage() {
             <p className="mt-2 text-xs text-[#71807d]">{tour.description}</p>
             <p className="mt-2 text-[10px]">
               <strong className="rounded bg-[#e8f0eb] px-2 py-1">
-                ★ {tour.rating} · {tour.reviewCount} reviews
+                ★ {tour.rating} · {tour.reviewCount} {pageContent.common.reviews}
               </strong>
               <span className="ml-3">
-                {tour.getFormattedDuration()} · {tour.groupSize} · English ·
-                Tagalog
+                {tour.getFormattedDuration()} · {tour.groupSize} · {pageContent.common.english} ·
+                {pageContent.common.tagalog}
               </span>
             </p>
           </div>
@@ -193,6 +354,7 @@ export default function TourDetailPage() {
               <p className="mt-5 rounded bg-[#e8f0eb] px-4 py-3 text-[10px]">
                 {detail.route}
               </p>
+              <ReviewSection itemId={tour.id} itemType="tours" compact />
             </div>
           </section>
           <BookingPanel tour={tour} />
