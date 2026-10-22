@@ -9,4 +9,4 @@ npm run dev
 
 ## Note:
 - This is the original passed project (though there is a 38 mins late).
-- "if-completed" branch is the completed project, passed the deadline but still completed, i think.
+- "if-completed" branch is the completed project, pass the deadline but still completed, i think.
